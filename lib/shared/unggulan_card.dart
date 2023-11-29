@@ -41,42 +41,44 @@ class UnggulanCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(10.0),
-            //   child: ClipRRect(
-            //     borderRadius: BorderRadius.circular(15),
-            //     child: Image.network(
-            //       product.images[0].url,
-            //       width: 80,
-            //       height: 80,
-            //     ),
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  product.images[0].url,
+                  width: 80,
+                  height: 80,
+                ),
+              ),
+            ),
             const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  product.name,
-                  style: boldTextStyle.copyWith(fontSize: 16),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  product.category,
-                  style: regularTextStyle,
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  formatPrice(product.minPrice.toDouble()),
-                  style: boldTextStyle,
-                ),
-              ],
-            )
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    product.name,
+                    style: boldTextStyle.copyWith(fontSize: 16),
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    product.category,
+                    style: regularTextStyle,
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    formatPrice(product.minPrice.toDouble()),
+                    style: boldTextStyle,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

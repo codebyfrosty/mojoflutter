@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ar/screens/aboutus_page.dart';
+import 'package:flutter_ar/screens/bottom_navigation_bar.dart';
 import 'package:flutter_ar/screens/changepass_page.dart';
 import 'package:flutter_ar/screens/edit_page.dart';
 import 'package:flutter_ar/screens/login_page.dart';
+import 'package:flutter_ar/screens/notlogin_page.dart';
 import 'package:flutter_ar/screens/orderlist_page.dart';
 import 'package:flutter_ar/shared/settings_card.dart';
 import 'package:flutter_ar/shared/theme.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/api.dart';
 import '../provider/auth_provider.dart';
@@ -150,10 +153,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 text: 'Log Out',
                 onPressed: () {
                   Provider.of<AuthProvider>(context, listen: false).logout();
-                  // final prefs = SharedPreferences.getInstance();
-                  // prefs.then((value) => value.clear());
+                  final prefs = SharedPreferences.getInstance();
+                  prefs.then((value) => value.clear());
+
                   pushNewScreen(context,
-                      screen: const LoginPage(), withNavBar: false);
+                      screen: const BottomNavigationBarWidget(), withNavBar: false);
                 }),
             const SizedBox(
               height: 15,
