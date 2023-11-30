@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ar/constant/api.dart';
 import 'package:flutter_ar/provider/address_provider.dart';
+import 'package:flutter_ar/provider/auth_provider.dart';
 import 'package:flutter_ar/provider/cart_provider.dart';
 import 'package:flutter_ar/screens/detailpesanan_page.dart';
+import 'package:flutter_ar/screens/login_page.dart';
 import 'package:flutter_ar/shared/cart_card.dart';
 import 'package:flutter_ar/shared/theme.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
@@ -135,13 +137,31 @@ class _CartPageState extends State<CartPage> {
                                 .where((item) => item.isSelected)
                                 .toList();
 
-                            // Perform checkout with selectedItems
-                            pushNewScreen(
-                              context,
-                              screen:
-                                  DetailPesananPage(itemDetails: selectedItems),
-                              withNavBar: false,
-                            );
+                            final authProvider = Provider.of<AuthProvider>(
+                                context,
+                                listen: false);
+
+                            if (authProvider.loggedIn) {
+                              pushNewScreen(
+                                context,
+                                screen: DetailPesananPage(
+                                    itemDetails: selectedItems),
+                                withNavBar: false,
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Silahkan login terlebih dahulu'),
+                                ),
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginPage(),
+                                ),
+                              );
+                            }
                           }
                         : null,
                     child: const Text('Checkout'),

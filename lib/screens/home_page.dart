@@ -303,7 +303,7 @@ class _HomePageState extends State<HomePage> {
                   height: 10,
                 ),
                 SizedBox(
-                  height: 250,
+                  height: 300,
                   child: TabBarView(
                     physics: const BouncingScrollPhysics(),
                     children: [
