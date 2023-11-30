@@ -16,6 +16,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String searchText = '';
+
   @override
   void initState() {
     super.initState();
@@ -45,7 +47,7 @@ class _HomePageState extends State<HomePage> {
           color: Colors.grey[200],
           borderRadius: BorderRadius.circular(10),
         ),
-        child: const TextField(
+        child: TextField(
           textAlign: TextAlign.left,
           decoration: InputDecoration(
             border: InputBorder.none,
@@ -59,6 +61,11 @@ class _HomePageState extends State<HomePage> {
               color: Colors.black,
             ),
           ),
+          onChanged: (value) {
+            setState(() {
+              searchText = value; // Simpan nilai pencarian
+            });
+          },
         ),
       );
     }
@@ -86,10 +93,13 @@ class _HomePageState extends State<HomePage> {
                       child: Text('No products available.'),
                     );
                   } else {
+                    final filteredProducts = data.products.where((product) =>
+                      product.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+
                     return ListView(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      children: data.products
+                      children: filteredProducts
                           .map((product) => UnggulanCard(product: product))
                           .toList(),
                     );
@@ -124,10 +134,13 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
+                final filteredProducts = data.products.where((product) =>
+                      product.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+
                 return ListView(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  children: data.products
+                  children: filteredProducts
                       .map((product) => ProdukCard(product: product))
                       .toList(),
                 );
@@ -160,10 +173,13 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
+                final filteredProducts = data.products.where((product) =>
+                      product.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+
                 return ListView(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  children: data.products
+                  children: filteredProducts
                       .map((product) => ProdukCard(product: product))
                       .toList(),
                 );
@@ -200,10 +216,13 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
+                final filteredProducts = data.products.where((product) =>
+                      product.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+
                 return ListView(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  children: data.products
+                  children: filteredProducts
                       .map((product) => ProdukCard(product: product))
                       .toList(),
                 );
@@ -240,10 +259,13 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
+                final filteredProducts = data.products.where((product) =>
+                      product.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+
                 return ListView(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  children: data.products
+                  children: filteredProducts
                       .map((product) => ProdukCard(product: product))
                       .toList(),
                 );
