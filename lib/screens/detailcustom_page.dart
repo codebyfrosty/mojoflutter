@@ -16,6 +16,7 @@ import 'package:flutter_ar/shared/theme.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import '../constant/api.dart';
 
@@ -78,16 +79,30 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
             child: Column(
               children: [
                 Stack(children: [
-                  Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/intro.png',
-                        width: MediaQuery.of(context).size.width,
+                  Column(children: [
+                    CarouselSlider(
+                      options: CarouselOptions(
                         height: MediaQuery.of(context).size.height / 2,
-                        fit: BoxFit.cover,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 1,
+                        enableInfiniteScroll: false,
+                        autoPlay: false,
                       ),
-                    ],
-                  ),
+                      items: data.detailProduct!.images.map((image) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: Image.network(
+                                image.url,
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ]),
                   Container(
                     margin: const EdgeInsets.only(
                       top: 20,

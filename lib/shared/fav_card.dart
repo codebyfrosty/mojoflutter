@@ -29,10 +29,11 @@ class FavCard extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: Image.asset(
-                'assets/images/kursi1.png',
-                width: 80,
+              child: Image.network(
+                wishModel.image.url,
                 height: 80,
+                width: 80,
+                fit: BoxFit.cover,
               ),
             ),
           ),

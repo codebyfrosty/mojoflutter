@@ -61,10 +61,11 @@ class _CartCardState extends State<CartCard> {
             padding: const EdgeInsets.all(10.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: Image.asset(
-                'assets/images/kursi1.png',
-                width: 80,
+              child: Image.network(
+                widget.cartItem.imageUrl,
                 height: 80,
+                width: 80,
+                fit: BoxFit.cover,
               ),
             ),
           ),
