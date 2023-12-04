@@ -372,6 +372,7 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: FontWeight.bold,
                   ),
                   tabs: const [
+                    Tab(text: 'All'),
                     Tab(text: 'Kursi'),
                     Tab(text: 'Sofa'),
                     Tab(text: 'Meja'),
@@ -386,6 +387,7 @@ class _HomePageState extends State<HomePage> {
                   child: TabBarView(
                     physics: const BouncingScrollPhysics(),
                     children: [
+                      allCategories(),
                       kursiOnly(),
                       sofaOnly(),
                       mejaOnly(),
