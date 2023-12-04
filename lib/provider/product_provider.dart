@@ -185,6 +185,49 @@ class SelectedItemProvider extends ChangeNotifier {
   }
 }
 
+class AllCategoryProvider extends ChangeNotifier {
+  List<Product> _products = [];
+  String _error = '';
+  Status _status = Status.loading;
+
+  List<Product> get products => _products;
+  String get error => _error;
+  Status get status => _status;
+
+  Future<List<Product>> fetchKursi() async {
+    try {
+      _status = Status.loading;
+      notifyListeners();
+
+      var response = await http.get(
+        Uri.parse('$baseUrl/products'),
+      );
+
+      var data = jsonDecode(response.body)['data'];
+      // debugPrint('[data kursi only]: $data');
+
+      List<Product> products = [];
+      for (var productData in data) {
+        products.add(Product.fromJson(productData));
+      }
+
+      _products = products;
+      _error = '';
+      _status = Status.success;
+      notifyListeners();
+
+      return products;
+    } catch (error) {
+      // debugPrint('[error kursi only]: $error');
+      _error = 'Error fetching: $error';
+      _status = Status.error;
+      notifyListeners();
+
+      throw Exception('$error');
+    }
+  }
+}
+
 class KursiCategoryProvider extends ChangeNotifier {
   List<Product> _products = [];
   String _error = '';

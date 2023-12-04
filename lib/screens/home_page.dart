@@ -93,8 +93,11 @@ class _HomePageState extends State<HomePage> {
                       child: Text('No products available.'),
                     );
                   } else {
-                    final filteredProducts = data.products.where((product) =>
-                      product.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+                    final filteredProducts = data.products
+                        .where((product) => product.name
+                            .toLowerCase()
+                            .contains(searchText.toLowerCase()))
+                        .toList();
 
                     return ListView(
                       physics: const BouncingScrollPhysics(),
@@ -121,6 +124,48 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
+    Widget allCategories() {
+      return SizedBox(
+        // height: MediaQuery.of(context).size.height,
+        child: Consumer<AllCategoryProvider>(
+          builder: (context, data, child) {
+            if (data.status == Status.loading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (data.status == Status.success) {
+              if (data.products.isEmpty) {
+                return const Center(
+                  child: Text('No products available.'),
+                );
+              } else {
+                final filteredProducts = data.products
+                    .where((product) => product.name
+                        .toLowerCase()
+                        .contains(searchText.toLowerCase()))
+                    .toList();
+
+                return ListView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: filteredProducts
+                      .map((product) => ProdukCard(product: product))
+                      .toList(),
+                );
+              }
+            } else if (data.status == Status.error) {
+              return Center(
+                child: Text(
+                  'Error: ${data.error}',
+                  style: TextStyle(color: Colors.red),
+                ),
+              );
+            } else {
+              return Container(); // Handle empty status here if needed
+            }
+          },
+        ),
+      );
+    }
+
     Widget kursiOnly() {
       return SizedBox(
         // height: MediaQuery.of(context).size.height,
@@ -134,8 +179,11 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
-                final filteredProducts = data.products.where((product) =>
-                      product.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+                final filteredProducts = data.products
+                    .where((product) => product.name
+                        .toLowerCase()
+                        .contains(searchText.toLowerCase()))
+                    .toList();
 
                 return ListView(
                   physics: const BouncingScrollPhysics(),
@@ -173,8 +221,11 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
-                final filteredProducts = data.products.where((product) =>
-                      product.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+                final filteredProducts = data.products
+                    .where((product) => product.name
+                        .toLowerCase()
+                        .contains(searchText.toLowerCase()))
+                    .toList();
 
                 return ListView(
                   physics: const BouncingScrollPhysics(),
@@ -216,8 +267,11 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
-                final filteredProducts = data.products.where((product) =>
-                      product.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+                final filteredProducts = data.products
+                    .where((product) => product.name
+                        .toLowerCase()
+                        .contains(searchText.toLowerCase()))
+                    .toList();
 
                 return ListView(
                   physics: const BouncingScrollPhysics(),
@@ -259,8 +313,11 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
-                final filteredProducts = data.products.where((product) =>
-                      product.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+                final filteredProducts = data.products
+                    .where((product) => product.name
+                        .toLowerCase()
+                        .contains(searchText.toLowerCase()))
+                    .toList();
 
                 return ListView(
                   physics: const BouncingScrollPhysics(),
