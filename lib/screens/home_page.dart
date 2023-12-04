@@ -360,7 +360,7 @@ class _HomePageState extends State<HomePage> {
             height: 10,
           ),
           DefaultTabController(
-            length: 4,
+            length: 5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
