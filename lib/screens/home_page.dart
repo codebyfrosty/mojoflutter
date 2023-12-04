@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
         Provider.of<LemariCategoryProvider>(context, listen: false)
             .fetchLemari());
     Future.microtask(() =>
-        Provider.of<AllCategoryProvider>(context, listen: false).fetchAll());
+        Provider.of<ProductProvider>(context, listen: false).fetchProducts());
   }
 
   @override
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
     Widget allCategories() {
       return SizedBox(
         // height: MediaQuery.of(context).size.height,
-        child: Consumer<AllCategoryProvider>(
+        child: Consumer<ProductProvider>(
           builder: (context, data, child) {
             if (data.status == Status.loading) {
               return const Center(child: CircularProgressIndicator());
