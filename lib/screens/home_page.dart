@@ -35,6 +35,8 @@ class _HomePageState extends State<HomePage> {
     Future.microtask(() =>
         Provider.of<LemariCategoryProvider>(context, listen: false)
             .fetchLemari());
+    Future.microtask(() =>
+        Provider.of<AllCategoryProvider>(context, listen: false).fetchAll());
   }
 
   @override

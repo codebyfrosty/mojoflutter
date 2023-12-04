@@ -194,7 +194,7 @@ class AllCategoryProvider extends ChangeNotifier {
   String get error => _error;
   Status get status => _status;
 
-  Future<List<Product>> fetchKursi() async {
+  Future<List<Product>> fetchAll() async {
     try {
       _status = Status.loading;
       notifyListeners();
