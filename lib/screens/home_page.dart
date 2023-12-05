@@ -58,10 +58,10 @@ class _HomePageState extends State<HomePage> {
               Icons.search,
               color: Colors.black,
             ),
-            suffixIcon: Icon(
-              Icons.settings,
-              color: Colors.black,
-            ),
+            // suffixIcon: Icon(
+            //   Icons.settings,
+            //   color: Colors.black,
+            // ),
           ),
           onChanged: (value) {
             setState(() {
@@ -415,15 +415,15 @@ class _HomePageState extends State<HomePage> {
             "Mojopahit Furniture",
             style: boldTextStyle.copyWith(fontSize: 24),
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.notifications,
-                color: Colors.black,
-              ),
-              onPressed: () {},
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: const Icon(
+          //       Icons.notifications,
+          //       color: Colors.black,
+          //     ),
+          //     onPressed: () {},
+          //   ),
+          // ],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
