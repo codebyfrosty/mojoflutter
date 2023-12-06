@@ -7,6 +7,7 @@ class Product {
   Weight weight;
   final bool available;
   final bool featured;
+  final bool customizable;
   final int minPrice;
   List<ImageModel> images;
   final DateTime createdAt;
@@ -20,6 +21,7 @@ class Product {
     required this.weight,
     required this.available,
     required this.featured,
+    required this.customizable,
     required this.minPrice,
     required this.images,
     required this.createdAt,
@@ -35,6 +37,7 @@ class Product {
       weight: Weight.fromJson(json["weight"]),
       available: json['available'],
       featured: json['featured'],
+      customizable: json['customizable'],
       minPrice: json['min_price'],
       images: List<ImageModel>.from(
           json["images"].map((x) => ImageModel.fromJson(x))),

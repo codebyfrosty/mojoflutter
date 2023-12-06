@@ -3,6 +3,7 @@ import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ar/model/cart_model.dart';
 import 'package:flutter_ar/model/product_model.dart';
+import 'package:flutter_ar/provider/auth_provider.dart';
 import 'package:flutter_ar/provider/cart_provider.dart';
 import 'package:flutter_ar/provider/product_provider.dart';
 import 'package:flutter_ar/provider/wishlist_provider.dart';
@@ -10,10 +11,12 @@ import 'package:flutter_ar/screens/ar_page.dart';
 import 'package:flutter_ar/screens/augmentedr_page.dart';
 import 'package:flutter_ar/screens/cart_page.dart';
 import 'package:flutter_ar/screens/detailsatu_pesanan.dart';
+import 'package:flutter_ar/screens/login_page.dart';
 import 'package:flutter_ar/shared/theme.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import '../constant/api.dart';
 
@@ -76,16 +79,30 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
             child: Column(
               children: [
                 Stack(children: [
-                  Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/intro.png',
-                        width: MediaQuery.of(context).size.width,
+                  Column(children: [
+                    CarouselSlider(
+                      options: CarouselOptions(
                         height: MediaQuery.of(context).size.height / 2,
-                        fit: BoxFit.cover,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 1,
+                        enableInfiniteScroll: false,
+                        autoPlay: false,
                       ),
-                    ],
-                  ),
+                      items: data.detailProduct!.images.map((image) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: Image.network(
+                                image.url,
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ]),
                   Container(
                     margin: const EdgeInsets.only(
                       top: 20,
@@ -475,22 +492,44 @@ Future<void> _showSelectionsModal(
                       Expanded(
                         child: ElevatedButton(
                           style: FilledButton.styleFrom(
-                              elevation: 0,
-                              backgroundColor: primaryColor,
-                              shape: const StadiumBorder(),
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 15)),
+                            elevation: 0,
+                            backgroundColor: primaryColor,
+                            shape: const StadiumBorder(),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                          ),
                           onPressed: () {
+                            final authProvider = Provider.of<AuthProvider>(
+                                context,
+                                listen: false);
                             // Handle confirmation of variant and quantity
                             // debugPrint('Selected SKU: ${detail.selectedSku}');
                             // debugPrint('Quantity: ${detail.quantity}');
-                            Provider.of<CartProvider>(context, listen: false)
-                                .addToCart(
-                              detail.selectedSku!,
-                              detail.quantity,
-                            );
-                            pushNewScreen(context,
-                                screen: const CartPage(), withNavBar: true);
+                            if (!authProvider.loggedIn) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Silahkan login terlebih dahulu'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginPage(),
+                                ),
+                              );
+                            } else {
+                              Provider.of<CartProvider>(context, listen: false)
+                                  .addToCart(
+                                detail.selectedSku!,
+                                detail.quantity,
+                              );
+                              pushNewScreen(
+                                context,
+                                screen: const CartPage(),
+                                withNavBar: true,
+                              );
+                            }
                           },
                           child: const Text('Buat Pesanan'),
                         ),
@@ -603,22 +642,43 @@ Future<void> _showCurrentSelectionsModal(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 15)),
                           onPressed: () {
-                            final itemDetails = CartItem(
-                              name: detail.detailProduct!.name,
-                              price: detail.detailProduct!.variant[0].price
-                                  .toDouble(),
-                              quantity: detail.quantity,
-                              sku: detail.selectedSku!,
-                              imageUrl: detail.detailProduct!.images[0].url,
-                              total: detail.detailProduct!.variant[0].price *
-                                  detail.quantity.toDouble(),
-                            );
+                            final authProvider = Provider.of<AuthProvider>(
+                                context,
+                                listen: false);
 
-                            pushNewScreen(context,
-                                screen: DetailSatuPesanan(
-                                  itemDetails: itemDetails,
+                            if (!authProvider.loggedIn) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Silahkan login terlebih dahulu'),
+                                  backgroundColor: Colors.red,
                                 ),
-                                withNavBar: true);
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginPage(),
+                                ),
+                              );
+                            } else {
+
+                              final itemDetails = CartItem(
+                                name: detail.detailProduct!.name,
+                                price: detail.detailProduct!.variant[0].price
+                                    .toDouble(),
+                                quantity: detail.quantity,
+                                sku: detail.selectedSku!,
+                                imageUrl: detail.detailProduct!.images[0].url,
+                                total: detail.detailProduct!.variant[0].price *
+                                    detail.quantity.toDouble(),
+                              );
+
+                              pushNewScreen(context,
+                                  screen: DetailSatuPesanan(
+                                    itemDetails: itemDetails,
+                                  ),
+                                  withNavBar: true);
+                            }
                           },
                           child: const Text('Buat Pesanan'),
                         ),

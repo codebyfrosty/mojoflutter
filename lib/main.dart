@@ -8,6 +8,7 @@ import 'package:flutter_ar/provider/rate_provider.dart';
 import 'package:flutter_ar/provider/wishlist_provider.dart';
 import 'package:flutter_ar/screens/bottom_navigation_bar.dart';
 import 'package:flutter_ar/screens/introduction_page.dart';
+import 'package:flutter_ar/screens/login_page.dart';
 import 'package:flutter_ar/shared/theme.dart';
 import 'package:provider/provider.dart';
 

@@ -16,6 +16,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String searchText = '';
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +35,8 @@ class _HomePageState extends State<HomePage> {
     Future.microtask(() =>
         Provider.of<LemariCategoryProvider>(context, listen: false)
             .fetchLemari());
+    Future.microtask(() =>
+        Provider.of<ProductProvider>(context, listen: false).fetchProducts());
   }
 
   @override
@@ -45,7 +49,7 @@ class _HomePageState extends State<HomePage> {
           color: Colors.grey[200],
           borderRadius: BorderRadius.circular(10),
         ),
-        child: const TextField(
+        child: TextField(
           textAlign: TextAlign.left,
           decoration: InputDecoration(
             border: InputBorder.none,
@@ -59,6 +63,11 @@ class _HomePageState extends State<HomePage> {
               color: Colors.black,
             ),
           ),
+          onChanged: (value) {
+            setState(() {
+              searchText = value; // Simpan nilai pencarian
+            });
+          },
         ),
       );
     }
@@ -86,10 +95,16 @@ class _HomePageState extends State<HomePage> {
                       child: Text('No products available.'),
                     );
                   } else {
+                    final filteredProducts = data.products
+                        .where((product) => product.name
+                            .toLowerCase()
+                            .contains(searchText.toLowerCase()))
+                        .toList();
+
                     return ListView(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      children: data.products
+                      children: filteredProducts
                           .map((product) => UnggulanCard(product: product))
                           .toList(),
                     );
@@ -111,6 +126,48 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
+    Widget allCategories() {
+      return SizedBox(
+        // height: MediaQuery.of(context).size.height,
+        child: Consumer<ProductProvider>(
+          builder: (context, data, child) {
+            if (data.status == Status.loading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (data.status == Status.success) {
+              if (data.products.isEmpty) {
+                return const Center(
+                  child: Text('No products available.'),
+                );
+              } else {
+                final filteredProducts = data.products
+                    .where((product) => product.name
+                        .toLowerCase()
+                        .contains(searchText.toLowerCase()))
+                    .toList();
+
+                return ListView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: filteredProducts
+                      .map((product) => ProdukCard(product: product))
+                      .toList(),
+                );
+              }
+            } else if (data.status == Status.error) {
+              return Center(
+                child: Text(
+                  'Error: ${data.error}',
+                  style: TextStyle(color: Colors.red),
+                ),
+              );
+            } else {
+              return Container(); // Handle empty status here if needed
+            }
+          },
+        ),
+      );
+    }
+
     Widget kursiOnly() {
       return SizedBox(
         // height: MediaQuery.of(context).size.height,
@@ -124,10 +181,16 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
+                final filteredProducts = data.products
+                    .where((product) => product.name
+                        .toLowerCase()
+                        .contains(searchText.toLowerCase()))
+                    .toList();
+
                 return ListView(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  children: data.products
+                  children: filteredProducts
                       .map((product) => ProdukCard(product: product))
                       .toList(),
                 );
@@ -160,10 +223,16 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
+                final filteredProducts = data.products
+                    .where((product) => product.name
+                        .toLowerCase()
+                        .contains(searchText.toLowerCase()))
+                    .toList();
+
                 return ListView(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  children: data.products
+                  children: filteredProducts
                       .map((product) => ProdukCard(product: product))
                       .toList(),
                 );
@@ -200,10 +269,16 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
+                final filteredProducts = data.products
+                    .where((product) => product.name
+                        .toLowerCase()
+                        .contains(searchText.toLowerCase()))
+                    .toList();
+
                 return ListView(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  children: data.products
+                  children: filteredProducts
                       .map((product) => ProdukCard(product: product))
                       .toList(),
                 );
@@ -240,10 +315,16 @@ class _HomePageState extends State<HomePage> {
                   child: Text('No products available.'),
                 );
               } else {
+                final filteredProducts = data.products
+                    .where((product) => product.name
+                        .toLowerCase()
+                        .contains(searchText.toLowerCase()))
+                    .toList();
+
                 return ListView(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  children: data.products
+                  children: filteredProducts
                       .map((product) => ProdukCard(product: product))
                       .toList(),
                 );
@@ -279,7 +360,7 @@ class _HomePageState extends State<HomePage> {
             height: 10,
           ),
           DefaultTabController(
-            length: 4,
+            length: 5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -293,6 +374,7 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: FontWeight.bold,
                   ),
                   tabs: const [
+                    Tab(text: 'All'),
                     Tab(text: 'Kursi'),
                     Tab(text: 'Sofa'),
                     Tab(text: 'Meja'),
@@ -303,10 +385,11 @@ class _HomePageState extends State<HomePage> {
                   height: 10,
                 ),
                 SizedBox(
-                  height: 250,
+                  height: 300,
                   child: TabBarView(
                     physics: const BouncingScrollPhysics(),
                     children: [
+                      allCategories(),
                       kursiOnly(),
                       sofaOnly(),
                       mejaOnly(),

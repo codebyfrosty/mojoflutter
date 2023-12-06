@@ -147,17 +147,27 @@ class _LoginPageState extends State<LoginPage> {
                           email: _emailController.text,
                           password: _passwordController.text,
                         );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Login Sukses'),
-                            backgroundColor: primaryColor,
-                          ),
-                        );
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          '/main',
-                          (route) => false,
-                        );
+
+                        if (authProvider.loggedIn) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Login Sukses'),
+                              backgroundColor: primaryColor,
+                            ),
+                          );
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/main',
+                            (route) => false,
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Email atau kata sandi salah'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
                       } catch (error) {
                         String errorMessage = 'An error occurred';
                         if (error is String) {

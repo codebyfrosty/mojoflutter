@@ -92,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
             controller: _passwordController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Nama lengkap tidak boleh kosong';
+                return 'Password tidak boleh kosong';
               }
               return null;
             },
@@ -100,7 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
             decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(20),
                 labelStyle: regularTextStyle,
-                hintText: 'Masukkan kata sandi lama',
+                hintText: 'Masukkan Password',
                 hintStyle: regularTextStyle,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -136,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
             controller: _emailController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Nama lengkap tidak boleh kosong';
+                return 'Email tidak boleh kosong';
               }
               return null;
             },
@@ -173,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
             controller: _numberController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Nama lengkap tidak boleh kosong';
+                return 'Nomor Telepon tidak boleh kosong';
               }
               return null;
             },
@@ -211,7 +211,7 @@ class _RegisterPageState extends State<RegisterPage> {
             controller: _confirmController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Nama lengkap tidak boleh kosong';
+                return 'Konfirmasi Password tidak boleh kosong';
               }
               return null;
             },
@@ -219,7 +219,7 @@ class _RegisterPageState extends State<RegisterPage> {
               contentPadding: const EdgeInsets.all(20),
               // labelText: 'Tempat Lahir',
               labelStyle: regularTextStyle,
-              hintText: 'Masukkan Tempat Lahir',
+              hintText: 'Masukkan Konfirmasi Password',
               hintStyle: regularTextStyle,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -279,11 +279,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       if (_formKey.currentState!.validate()) {
                         try {
                           await authProvider.register(
-                            name: _nameController.text,
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                            phone: _numberController.text,
-                            confirm_password: _confirmController.text,
+                            name: 'reza rahardian',
+                            email: 'reza@gmail.com',
+                            password: '123456',
+                            phone: '081299878879',
+                            confirm_password: '123456',
                           );
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -297,6 +297,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             (route) => false,
                           );
                         } catch (error) {
+                          print(error);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
