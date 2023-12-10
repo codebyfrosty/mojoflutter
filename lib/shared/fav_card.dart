@@ -68,6 +68,9 @@ class FavCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(
+                  height: 16,
+                ),
                 Expanded(
                   child: Text(
                     wishModel.name,
@@ -89,6 +92,9 @@ class FavCard extends StatelessWidget {
                   formatPrice(wishModel.price.toDouble()),
                   style: boldTextStyle,
                 ),
+                const SizedBox(
+                  height: 16,
+                ),
               ],
             ),
           ),
@@ -109,13 +115,12 @@ class FavCard extends StatelessWidget {
             },
             icon: const Icon(
               Icons.shopping_cart_rounded,
-              color: primaryColor,
+              color: Colors.white,
               size: 20,
             ),
             label: SizedBox.shrink(),
             style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.zero,
-            ),
+                padding: EdgeInsets.zero, backgroundColor: primaryColor),
           ),
           IconButton(
               onPressed: () {

@@ -55,13 +55,13 @@ class ProdukCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: Color.fromRGBO(128, 128, 128, 0.3),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    'Produk Kustom',
+                    'Custom',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),

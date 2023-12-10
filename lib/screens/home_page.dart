@@ -58,10 +58,10 @@ class _HomePageState extends State<HomePage> {
               Icons.search,
               color: Colors.black,
             ),
-            suffixIcon: Icon(
-              Icons.settings,
-              color: Colors.black,
-            ),
+            // suffixIcon: Icon(
+            //   Icons.settings,
+            //   color: Colors.black,
+            // ),
           ),
           onChanged: (value) {
             setState(() {
@@ -416,13 +416,13 @@ class _HomePageState extends State<HomePage> {
             style: boldTextStyle.copyWith(fontSize: 24),
           ),
           actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.notifications,
-                color: Colors.black,
-              ),
-              onPressed: () {},
-            ),
+            // IconButton(
+            //   icon: const Icon(
+            //     Icons.notifications,
+            //     color: Colors.black,
+            //   ),
+            //   onPressed: () {},
+            // ),
           ],
         ),
         body: Padding(

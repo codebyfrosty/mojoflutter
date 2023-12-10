@@ -144,7 +144,7 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
                                 },
                                 icon: const Icon(
                                   Icons.camera_alt_rounded,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                 ),
                               ),
                               IconButton(
@@ -154,7 +154,7 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
                                 },
                                 icon: const Icon(
                                   Icons.favorite_border_rounded,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                 ),
                               ),
                             ],
@@ -661,7 +661,6 @@ Future<void> _showCurrentSelectionsModal(
                                 ),
                               );
                             } else {
-
                               final itemDetails = CartItem(
                                 name: detail.detailProduct!.name,
                                 price: detail.detailProduct!.variant[0].price
