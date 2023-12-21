@@ -6,6 +6,7 @@ import 'package:flutter_ar/screens/edit_page.dart';
 import 'package:flutter_ar/screens/login_page.dart';
 import 'package:flutter_ar/screens/notlogin_page.dart';
 import 'package:flutter_ar/screens/orderlist_page.dart';
+import 'package:flutter_ar/screens/pendingpayment_page.dart';
 import 'package:flutter_ar/shared/settings_card.dart';
 import 'package:flutter_ar/shared/theme.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
@@ -96,6 +97,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   pushNewScreen(context,
                       screen: const OrderListScreen(), withNavBar: false);
+                }),
+            const SizedBox(
+              height: 15,
+            ),
+            SettingsCard(
+                imagePath: 'assets/images/pesanansaya.png',
+                text: 'Pending Payment',
+                onPressed: () {
+                  pushNewScreen(context,
+                      screen: PendingPaymentScreen(), withNavBar: false);
                 }),
             const SizedBox(
               height: 15,

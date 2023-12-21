@@ -3,6 +3,8 @@ import 'package:flutter_ar/provider/address_provider.dart';
 import 'package:flutter_ar/provider/auth_provider.dart';
 import 'package:flutter_ar/provider/cart_provider.dart';
 import 'package:flutter_ar/provider/order_provider.dart';
+import 'package:flutter_ar/provider/orderdetail_provider.dart';
+import 'package:flutter_ar/provider/payment_provider.dart';
 import 'package:flutter_ar/provider/product_provider.dart';
 import 'package:flutter_ar/provider/rate_provider.dart';
 import 'package:flutter_ar/provider/wishlist_provider.dart';
@@ -31,11 +33,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SelectedItemProvider()),
         ChangeNotifierProvider(create: (context) => DetailProductProvider()),
         ChangeNotifierProvider(create: (context) => KursiCategoryProvider()),
+        ChangeNotifierProvider(create: (context) => PaymentProvider()),
         ChangeNotifierProvider(create: (context) => SofaCategoryProvider()),
         ChangeNotifierProvider(create: (context) => MejaCategoryProvider()),
         ChangeNotifierProvider(create: (context) => LemariCategoryProvider()),
         ChangeNotifierProvider(create: (context) => UserProfileProvider()),
         ChangeNotifierProvider(create: (context) => ImageUploadProvider()),
+        ChangeNotifierProvider(create: (context) => OrderDetailProvider()),
         ChangeNotifierProvider(create: (context) => CartProvider()),
         ChangeNotifierProvider(create: (context) => WishProvider()),
         ChangeNotifierProvider(create: (context) => AddressProvider()),
