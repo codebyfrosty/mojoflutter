@@ -17,6 +17,7 @@ import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/api.dart';
 
@@ -31,7 +32,7 @@ class DetailCustomPage extends StatefulWidget {
   const DetailCustomPage({
     super.key,
     required this.id,
-    required this.product,
+    required this.product
   });
 
   @override
@@ -39,12 +40,26 @@ class DetailCustomPage extends StatefulWidget {
 }
 
 class _DetailCustomPageState extends State<DetailCustomPage> {
+  bool _isLoggedIn = false;
+
+  Future<void> _loadLoginState() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    });
+  }
+  
   @override
   void initState() {
     super.initState();
     Future.microtask(() =>
         Provider.of<DetailProductProvider>(context, listen: false)
             .fetchDetailProduct(widget.id));
+    
+    _isLoggedIn = Provider.of<AuthProvider>(context, listen: false)
+        .loggedIn;
+
+    _loadLoginState();
   }
 
   final TextEditingController _selectedValueController =
@@ -277,7 +292,7 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
                             FilledButton(
                               onPressed: () {
                                 _showCurrentSelectionsModal(
-                                    context, data.detailProduct!.variant);
+                                    context, data.detailProduct!.variant, _isLoggedIn);
                               },
                               style: FilledButton.styleFrom(
                                 backgroundColor: primaryColor,
@@ -294,7 +309,7 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
                             IconButton(
                                 onPressed: () {
                                   _showSelectionsModal(
-                                      context, data.detailProduct!.variant);
+                                      context, data.detailProduct!.variant, _isLoggedIn);
                                 },
                                 icon: const Icon(
                                   Icons.shopping_cart_rounded,
@@ -408,6 +423,7 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
 Future<void> _showSelectionsModal(
   BuildContext context,
   List<Variant> variants,
+  bool isLoggedIn,
 ) async {
   showModalBottomSheet(
     context: context,
@@ -497,14 +513,11 @@ Future<void> _showSelectionsModal(
                             shape: const StadiumBorder(),
                             padding: const EdgeInsets.symmetric(vertical: 15),
                           ),
-                          onPressed: () {
-                            final authProvider = Provider.of<AuthProvider>(
-                                context,
-                                listen: false);
+                          onPressed: () async {
                             // Handle confirmation of variant and quantity
                             // debugPrint('Selected SKU: ${detail.selectedSku}');
                             // debugPrint('Quantity: ${detail.quantity}');
-                            if (!authProvider.loggedIn) {
+                            if (isLoggedIn) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:
@@ -552,6 +565,7 @@ Future<void> _showSelectionsModal(
 Future<void> _showCurrentSelectionsModal(
   BuildContext context,
   List<Variant> variants,
+  bool isLoggedIn
 ) async {
   showModalBottomSheet(
     context: context,
@@ -642,11 +656,7 @@ Future<void> _showCurrentSelectionsModal(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 15)),
                           onPressed: () {
-                            final authProvider = Provider.of<AuthProvider>(
-                                context,
-                                listen: false);
-
-                            if (!authProvider.loggedIn) {
+                            if (isLoggedIn) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:

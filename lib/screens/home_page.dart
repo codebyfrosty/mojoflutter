@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                     final filteredProducts = data.products
                         .where((product) => product.name
                             .toLowerCase()
-                            .contains(searchText.toLowerCase()))
+                            .contains(searchText.toLowerCase()) && product.customizable == true)
                         .toList();
 
                     return ListView(

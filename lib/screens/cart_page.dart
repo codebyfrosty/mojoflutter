@@ -12,6 +12,7 @@ import 'package:flutter_ar/shared/theme.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -22,6 +23,14 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   bool isAnyItemSelected = false;
+  bool _isLoggedIn = false;
+
+  Future<void> _loadLoginState() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    });
+  }
 
   @override
   void initState() {
@@ -31,6 +40,11 @@ class _CartPageState extends State<CartPage> {
         Provider.of<CartProvider>(context, listen: false).fetchCartData());
     Future.microtask(() =>
         Provider.of<AddressProvider>(context, listen: false).fetchAddresses());
+
+    _isLoggedIn = Provider.of<AuthProvider>(context, listen: false)
+        .loggedIn;
+
+    _loadLoginState();
   }
 
   @override
@@ -137,11 +151,7 @@ class _CartPageState extends State<CartPage> {
                                 .where((item) => item.isSelected)
                                 .toList();
 
-                            final authProvider = Provider.of<AuthProvider>(
-                                context,
-                                listen: false);
-
-                            if (authProvider.loggedIn) {
+                            if (_isLoggedIn) {
                               pushNewScreen(
                                 context,
                                 screen: DetailPesananPage(
