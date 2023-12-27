@@ -531,7 +531,7 @@ Future<void> _showSelectionsModal(
                               );
                             }
                           },
-                          child: const Text('Buat Pesanan'),
+                          child: const Text('Tambah ke cart'),
                         ),
                       ),
                       const SizedBox(

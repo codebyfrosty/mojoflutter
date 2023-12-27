@@ -84,9 +84,12 @@ class _OrderListScreenState extends State<OrderListScreen> {
             child: Row(
               children: [
                 _buildFilterButton('ALL', ''),
-                _buildFilterButton('DELIVERED', 'delivered'),
-                _buildFilterButton('ON PROGRESS', 'on_progress'),
-                _buildFilterButton('CANCELED', 'failure'),
+                _buildFilterButton('On Progress', 'on_progress'),
+                _buildFilterButton('Confirmed', 'confirmed'),
+                _buildFilterButton('Delivered', 'delivered'),
+                _buildFilterButton('Allocated', 'allocated'),
+                _buildFilterButton('On Delivery', 'on_delivery'),
+                _buildFilterButton('Canceled', 'failure'),
               ],
             ),
           ),
@@ -169,27 +172,22 @@ class _OrderListScreenState extends State<OrderListScreen> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                    15.0),
+                                borderRadius: BorderRadius.circular(15.0),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey
-                                        .withOpacity(0.5),
+                                    color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 1,
                                     blurRadius: 4,
-                                    offset: const Offset(
-                                        0, 3),
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
-                                color:
-                                    Colors.white,
+                                color: Colors.white,
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.all(
-                                        15.0),
+                                    padding: const EdgeInsets.all(15.0),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -343,6 +341,15 @@ class _OrderListScreenState extends State<OrderListScreen> {
     } else if (status == 'failure') {
       statusColor = Colors.red;
       statusText = 'Canceled';
+    } else if (status == 'on_delivery') {
+      statusColor = Colors.orange;
+      statusText = 'On Delivery';
+    } else if (status == 'allocated') {
+      statusColor = Colors.orange;
+      statusText = 'Allocated';
+    } else if (status == 'confirmed') {
+      statusColor = Colors.orange;
+      statusText = 'Confirmed';
     }
 
     return Text(
