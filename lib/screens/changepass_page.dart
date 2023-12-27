@@ -15,8 +15,11 @@ class _ChangePassPageState extends State<ChangePassPage> {
   final _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
   bool _isObscureBaru = true;
+  bool _isObscureBaru2 = true;
   String? _oldPassword;
   String? _newPassword;
+  TextEditingController password = TextEditingController();
+  TextEditingController confirmpassword = TextEditingController();
 
   void _submitForm(BuildContext context) {
     if (_formKey.currentState!.validate()) {
@@ -113,6 +116,7 @@ class _ChangePassPageState extends State<ChangePassPage> {
             height: 10,
           ),
           TextFormField(
+            controller: password,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Kata sandi baru harus diisi';
@@ -148,6 +152,55 @@ class _ChangePassPageState extends State<ChangePassPage> {
                     onPressed: () {
                       setState(() {
                         _isObscureBaru = !_isObscureBaru;
+                      });
+                    })),
+          ),
+        ],
+      );
+    }
+
+    Widget konfirSandiBaru() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 0,
+          ),
+          Text(
+            'Konfirmasi Kata Sandi',
+            style: boldTextStyle,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            controller: confirmpassword,
+            validator: (value) {
+              if (password.text != confirmpassword.text) {
+                return "Password does not match";
+              }
+              return null;
+            },
+            // onSaved: (value) {
+            //   _newPassword = value;
+            // },
+            obscureText: _isObscureBaru2,
+            decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(20),
+                // labelText: 'Tanggal Lahir',
+                labelStyle: regularTextStyle,
+                hintText: 'Konfirmasi Kata Sandi',
+                hintStyle: regularTextStyle,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                suffixIcon: IconButton(
+                    icon: Icon(_isObscureBaru2
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _isObscureBaru2 = !_isObscureBaru2;
                       });
                     })),
           ),
@@ -207,6 +260,10 @@ class _ChangePassPageState extends State<ChangePassPage> {
               ),
               kataSandi(),
               kataSandiBaru(),
+              const SizedBox(
+                height: 15,
+              ),
+              konfirSandiBaru(),
               const SizedBox(
                 height: 30,
               ),
