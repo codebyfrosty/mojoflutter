@@ -517,7 +517,7 @@ Future<void> _showSelectionsModal(
                             // Handle confirmation of variant and quantity
                             // debugPrint('Selected SKU: ${detail.selectedSku}');
                             // debugPrint('Quantity: ${detail.quantity}');
-                            if (isLoggedIn) {
+                            if (!isLoggedIn) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:
@@ -656,7 +656,7 @@ Future<void> _showCurrentSelectionsModal(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 15)),
                           onPressed: () {
-                            if (isLoggedIn) {
+                            if (!isLoggedIn) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:
