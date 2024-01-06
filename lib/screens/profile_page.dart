@@ -102,8 +102,8 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 15,
             ),
             SettingsCard(
-                imagePath: 'assets/images/pesanansaya.png',
-                text: 'Pending Payment',
+                imagePath: 'assets/images/menunggu.png',
+                text: 'Menunggu Pembayaran',
                 onPressed: () {
                   pushNewScreen(context,
                       screen: PendingPaymentScreen(), withNavBar: false);
@@ -113,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             SettingsCard(
                 imagePath: 'assets/images/editprofile.png',
-                text: 'Edit Profile',
+                text: 'Edit Profil',
                 onPressed: () {
                   pushNewScreen(context,
                       screen: const EditProfilePage(), withNavBar: false);
@@ -136,7 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 15,
             ),
             SettingsCard(
-                imagePath: 'assets/images/gantisandi.png',
+                imagePath: 'assets/images/editalamat.png',
                 text: 'Edit Alamat',
                 onPressed: () {
                   pushNewScreen(context,
@@ -168,7 +168,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   prefs.then((value) => value.clear());
 
                   pushNewScreen(context,
-                      screen: const BottomNavigationBarWidget(), withNavBar: false);
+                      screen: const BottomNavigationBarWidget(),
+                      withNavBar: false);
                 }),
             const SizedBox(
               height: 15,

@@ -331,8 +331,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ),
         data: [
-          SelectedListItem(name: 'male'),
-          SelectedListItem(name: 'female'),
+          SelectedListItem(name: 'Laki Laki'),
+          SelectedListItem(name: 'Perempuan'),
         ],
         selectedItems: (List<dynamic> selectedList) {
           List<String> list = [];

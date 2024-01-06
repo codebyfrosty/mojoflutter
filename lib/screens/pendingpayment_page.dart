@@ -150,7 +150,7 @@ class _PendingPaymentScreenState extends State<PendingPaymentScreen> {
           ),
         ),
         title: Text(
-          'Pending Payments',
+          'Menunggu Pembayaran',
           style: getTextStyle(isBold: true, color: Colors.black),
         ),
       ),

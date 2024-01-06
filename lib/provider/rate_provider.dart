@@ -82,7 +82,7 @@ class RateProvider with ChangeNotifier {
 }
 
 class BankProvider with ChangeNotifier {
-  List<String> _banks = ['permata', 'bca', 'bri', 'bni'];
+  List<String> _banks = ['Permata', 'BCA', 'BRI', 'BNI'];
   String? _selectedBank;
 
   List<String> get banks => _banks;

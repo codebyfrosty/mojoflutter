@@ -29,11 +29,7 @@ String formatPriceAsRupiah(int price) {
 class DetailCustomPage extends StatefulWidget {
   final int id;
   final Product product;
-  const DetailCustomPage({
-    super.key,
-    required this.id,
-    required this.product
-  });
+  const DetailCustomPage({super.key, required this.id, required this.product});
 
   @override
   State<DetailCustomPage> createState() => _DetailCustomPageState();
@@ -48,16 +44,15 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
       _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
     });
   }
-  
+
   @override
   void initState() {
     super.initState();
     Future.microtask(() =>
         Provider.of<DetailProductProvider>(context, listen: false)
             .fetchDetailProduct(widget.id));
-    
-    _isLoggedIn = Provider.of<AuthProvider>(context, listen: false)
-        .loggedIn;
+
+    _isLoggedIn = Provider.of<AuthProvider>(context, listen: false).loggedIn;
 
     _loadLoginState();
   }
@@ -91,7 +86,7 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
           );
         } else {
           return SingleChildScrollView(
-            child: Column(
+            child: Stack(
               children: [
                 Stack(children: [
                   Column(children: [
@@ -133,7 +128,7 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
                             },
                             icon: const Icon(
                               Icons.arrow_back,
-                              color: Colors.white,
+                              color: Colors.black,
                             )),
                         SizedBox(
                           child: Row(
@@ -180,6 +175,8 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
                   ),
                 ]),
                 Container(
+                  margin: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height / 2.1),
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 2,
                   decoration: const BoxDecoration(
@@ -191,8 +188,8 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
                   child: Padding(
                     padding:
                         const EdgeInsets.only(top: 24.0, left: 30, right: 30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: ListView(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -255,32 +252,37 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
                         ),
                         if (data.detailProduct!.customizable == true)
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               const SizedBox(height: 12),
                               for (var selection
                                   in data.detailProduct!.selections)
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      selection.name,
-                                      style:
-                                          boldTextStyle.copyWith(fontSize: 20),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        for (var option in selection.options)
-                                          Text(
-                                              '${option.value}'), // Replace ... with actual data
-                                      ],
-                                    ),
-                                  ],
+                                Container(
+                                  margin: EdgeInsets.only(right: 30),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        selection.name,
+                                        style: boldTextStyle.copyWith(
+                                            fontSize: 20),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          for (var option in selection.options)
+                                            Text(
+                                                '${option.value}'), // Replace ... with actual data
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               const Spacer(),
                             ],
@@ -291,8 +293,8 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
                           children: [
                             FilledButton(
                               onPressed: () {
-                                _showCurrentSelectionsModal(
-                                    context, data.detailProduct!.variant, _isLoggedIn);
+                                _showCurrentSelectionsModal(context,
+                                    data.detailProduct!.variant, _isLoggedIn);
                               },
                               style: FilledButton.styleFrom(
                                 backgroundColor: primaryColor,
@@ -308,8 +310,8 @@ class _DetailCustomPageState extends State<DetailCustomPage> {
                             ),
                             IconButton(
                                 onPressed: () {
-                                  _showSelectionsModal(
-                                      context, data.detailProduct!.variant, _isLoggedIn);
+                                  _showSelectionsModal(context,
+                                      data.detailProduct!.variant, _isLoggedIn);
                                 },
                                 icon: const Icon(
                                   Icons.shopping_cart_rounded,
@@ -563,10 +565,7 @@ Future<void> _showSelectionsModal(
 }
 
 Future<void> _showCurrentSelectionsModal(
-  BuildContext context,
-  List<Variant> variants,
-  bool isLoggedIn
-) async {
+    BuildContext context, List<Variant> variants, bool isLoggedIn) async {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
