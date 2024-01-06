@@ -151,7 +151,7 @@ class _CartPageState extends State<CartPage> {
                                 .where((item) => item.isSelected)
                                 .toList();
 
-                            if (_isLoggedIn) {
+                            if (!_isLoggedIn) {
                               pushNewScreen(
                                 context,
                                 screen: DetailPesananPage(
