@@ -8,11 +8,44 @@ class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({Key? key, required this.orderDetail})
       : super(key: key);
 
+  TextStyle getTextStyle({
+    bool isBold = false,
+    bool isLight = false,
+    Color? color,
+  }) {
+    if (isBold) {
+      return TextStyle(
+        fontWeight: FontWeight.bold,
+        color: color,
+      );
+    } else if (isLight) {
+      return TextStyle(
+        color: color ?? Colors.grey,
+      );
+    }
+    return TextStyle(color: color);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order Detail'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+        title: Text(
+          'Detail Order',
+          style: getTextStyle(isBold: true, color: Colors.black),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

@@ -8,7 +8,7 @@ import 'package:flutter_ar/provider/cart_provider.dart';
 import 'package:flutter_ar/provider/product_provider.dart';
 import 'package:flutter_ar/provider/wishlist_provider.dart';
 import 'package:flutter_ar/screens/ar_page.dart';
-import 'package:flutter_ar/screens/augmentedr_page.dart';
+// import 'package:flutter_ar/screens/augmentedr_page.dart';
 import 'package:flutter_ar/screens/cart_page.dart';
 import 'package:flutter_ar/screens/detailsatu_pesanan.dart';
 import 'package:flutter_ar/screens/login_page.dart';

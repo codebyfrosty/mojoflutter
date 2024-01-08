@@ -96,9 +96,11 @@ class _HomePageState extends State<HomePage> {
                     );
                   } else {
                     final filteredProducts = data.products
-                        .where((product) => product.name
-                            .toLowerCase()
-                            .contains(searchText.toLowerCase()) && product.customizable == true)
+                        .where((product) =>
+                            product.name
+                                .toLowerCase()
+                                .contains(searchText.toLowerCase()) &&
+                            product.featured == true)
                         .toList();
 
                     return ListView(

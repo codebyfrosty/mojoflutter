@@ -30,7 +30,7 @@ class FavCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 150,
       width: MediaQuery.of(context).size.width - (2 * 24),
       margin: const EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
@@ -45,8 +45,8 @@ class FavCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               child: Image.network(
                 wishModel.image.url,
-                height: 80,
-                width: 80,
+                height: 90,
+                width: 90,
                 fit: BoxFit.cover,
               ),
             ),
@@ -63,7 +63,7 @@ class FavCard extends StatelessWidget {
           // ),
           const SizedBox(width: 10),
           Container(
-            width: 100,
+            width: 120,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -71,10 +71,11 @@ class FavCard extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                Expanded(
+                Container(
                   child: Text(
                     wishModel.name,
                     style: boldTextStyle.copyWith(fontSize: 16),
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -99,28 +100,32 @@ class FavCard extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          ElevatedButton.icon(
-            onPressed: () async {
-              bool success = await addToCartCallback(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    success
-                        ? 'Produk berhasil ditambahkan ke cart'
-                        : 'Gagal menambahkan produk ke cart',
+          Container(
+            width: 45,
+            child: ElevatedButton.icon(
+              onPressed: () async {
+                bool success = await addToCartCallback(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      success
+                          ? 'Produk berhasil ditambahkan ke cart'
+                          : 'Gagal menambahkan produk ke cart',
+                    ),
+                    backgroundColor: success ? Colors.green : Colors.red,
                   ),
-                  backgroundColor: success ? Colors.green : Colors.red,
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.shopping_cart_rounded,
-              color: Colors.white,
-              size: 20,
+                );
+              },
+              icon: const Icon(
+                Icons.shopping_cart_rounded,
+                color: Colors.white,
+                size: 20,
+              ),
+              label: SizedBox.shrink(),
+              style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.only(left: 7),
+                  backgroundColor: primaryColor),
             ),
-            label: SizedBox.shrink(),
-            style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.zero, backgroundColor: primaryColor),
           ),
           IconButton(
               onPressed: () {

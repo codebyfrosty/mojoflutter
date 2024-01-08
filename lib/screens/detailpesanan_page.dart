@@ -64,7 +64,7 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
         ),
         backgroundColor: Colors.transparent,
         title: Text(
-          'Detail Pesanan',
+          'Daftar Pesanan',
           style: boldTextStyle.copyWith(fontSize: 24),
         ),
       ),

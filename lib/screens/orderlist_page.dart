@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter_ar/constant/api.dart';
 import 'package:flutter_ar/shared/theme.dart';
 import 'package:intl/intl.dart';
+import 'package:buttons_tabbar/buttons_tabbar.dart';
+// import 'package:flutter_ar/shared/theme.dart';
 
 class OrderListScreen extends StatefulWidget {
   const OrderListScreen({Key? key}) : super(key: key);
@@ -78,6 +80,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
         ),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -318,14 +321,21 @@ class _OrderListScreenState extends State<OrderListScreen> {
   }
 
   Widget _buildFilterButton(String text, String status) {
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          _filterStatus = status;
-        });
-      },
-      child: Text(text),
-    );
+    return Container(
+        margin: EdgeInsets.only(left: 5, right: 5),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primaryColor,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          ),
+          onPressed: () {
+            setState(() {
+              _filterStatus = status;
+            });
+          },
+          child: Text(text),
+        ));
   }
 
   Widget _buildStatusWidget(String status) {

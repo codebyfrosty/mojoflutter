@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ar/provider/order_provider.dart';
 import 'package:flutter_ar/screens/payment_page.dart';
 import 'package:flutter_ar/screens/pendingpaymentdetail_page.dart';
+import 'package:flutter_ar/shared/theme.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_ar/provider/payment_provider.dart';
@@ -246,11 +247,17 @@ class _PendingPaymentScreenState extends State<PendingPaymentScreen> {
                             _showPaymentDetail(context, payment.id);
                           },
                           style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                          ),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              backgroundColor: primaryColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
                           child: Text(
-                            'DETAIL PEMBAYARAN',
-                            style: TextStyle(fontSize: 16),
+                            'Detail Pembayaran',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),

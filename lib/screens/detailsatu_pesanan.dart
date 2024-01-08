@@ -70,7 +70,7 @@ class _DetailSatuPesananState extends State<DetailSatuPesanan> {
         ),
         backgroundColor: Colors.transparent,
         title: Text(
-          'Daftar Pesanan',
+          'Detail Pesanan',
           style: boldTextStyle.copyWith(fontSize: 24),
         ),
       ),

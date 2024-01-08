@@ -75,11 +75,11 @@ class _CartCardState extends State<CartCard> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                constraints: const BoxConstraints(maxWidth: 200),
+                constraints: const BoxConstraints(maxWidth: 150),
                 child: Text(
                   widget.cartItem.name,
                   style: boldTextStyle.copyWith(fontSize: 16),
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
