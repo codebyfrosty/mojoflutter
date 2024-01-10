@@ -42,7 +42,7 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
           .addresses
           .firstWhere((address) => address.id == widget.selectedAddressId);
     }
-    Future.microtask(() => context.read<AddressProvider>().fetchAddresses());
+    Future.microtask(() => context.read<AddressProvider>().fetchAddresses(context));
   }
 
   @override

@@ -48,7 +48,7 @@ class _DetailSatuPesananState extends State<DetailSatuPesanan> {
           .addresses
           .firstWhere((address) => address.id == widget.selectedAddressId);
     }
-    Future.microtask(() => context.read<AddressProvider>().fetchAddresses());
+    Future.microtask(() => context.read<AddressProvider>().fetchAddresses(context));
   }
 
   @override

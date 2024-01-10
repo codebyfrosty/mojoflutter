@@ -39,7 +39,7 @@ class _CartPageState extends State<CartPage> {
     Future.microtask(() =>
         Provider.of<CartProvider>(context, listen: false).fetchCartData());
     Future.microtask(() =>
-        Provider.of<AddressProvider>(context, listen: false).fetchAddresses());
+        Provider.of<AddressProvider>(context, listen: false).fetchAddresses(context));
 
     _isLoggedIn = Provider.of<AuthProvider>(context, listen: false)
         .loggedIn;

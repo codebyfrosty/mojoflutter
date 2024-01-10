@@ -1,19 +1,56 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_ar/model/address_model.dart';
 import 'package:flutter_ar/provider/address_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../shared/theme.dart';
 
-class AddressPage extends StatefulWidget {
-  const AddressPage({super.key});
+class EditAddressPage extends StatefulWidget {
+  final int addressId;
+
+  const EditAddressPage({Key? key, required this.addressId}) : super(key: key);
 
   @override
-  State<AddressPage> createState() => _AddressPageState();
+  State<EditAddressPage> createState() => _EditAddressPageState();
 }
 
-class _AddressPageState extends State<AddressPage> {
+class _EditAddressPageState extends State<EditAddressPage> {
+  late AddressModel _addressData;
+  double _showList = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAddressData();
+  }
+
+  Future<void> _loadAddressData() async {
+    try {
+      final addressProvider =
+          Provider.of<AddressProvider>(context, listen: false);
+      final _addressData =
+          await addressProvider.getAddresses(widget.addressId, context);
+      if (_addressData != null) {
+        setState(() {
+          _nameController.text = _addressData.contactName;
+          _fullAddressController.text = _addressData.address;
+          _numberController.text = _addressData.contactPhone;
+          _addressController.text = _addressData.district;
+          _noteController.text = _addressData.note;
+          _isPrimary = _addressData.isPrimary;
+        });
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to load address data'),
+        ),
+      );
+    }
+  }
+
   bool _isPrimary = false;
   final TextEditingController _noteController =
       TextEditingController(); // Controller for email field
@@ -164,37 +201,6 @@ class _AddressPageState extends State<AddressPage> {
       );
     }
 
-    // Widget kecamatanInput() {
-    //   return Column(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [
-    //       Text(
-    //         'Kecamatan / Kota / Provinsi / Kode Pos',
-    //         style: boldTextStyle,
-    //       ),
-    //       const SizedBox(
-    //         height: 10,
-    //       ),
-    //       TextFormField(
-    //         controller: _numberController,
-    //         decoration: InputDecoration(
-    //           contentPadding: const EdgeInsets.all(20),
-    //           // labelText: 'Nomor Hp',
-    //           labelStyle: regularTextStyle,
-    //           hintText: 'Masukkan catatan tentang alamat anda',
-    //           hintStyle: regularTextStyle,
-    //           border: OutlineInputBorder(
-    //             borderRadius: BorderRadius.circular(10),
-    //           ),
-    //         ),
-    //       ),
-    //       const SizedBox(
-    //         height: 15,
-    //       ),
-    //     ],
-    //   );
-    // }
-
     Widget kecamatanInput() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,6 +216,7 @@ class _AddressPageState extends State<AddressPage> {
             onChanged: (value) {
               Provider.of<LocationProvider>(context, listen: false)
                   .fetchLocations(value);
+              _showList = 200;
             },
             controller: _addressController,
             decoration: InputDecoration(
@@ -222,9 +229,6 @@ class _AddressPageState extends State<AddressPage> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 15,
-          ),
           Consumer<LocationProvider>(
             builder: (context, locationProvider, _) {
               if (locationProvider.isLoading) {
@@ -234,7 +238,7 @@ class _AddressPageState extends State<AddressPage> {
               } else {
                 if (_addressController.text.isNotEmpty) {
                   return SizedBox(
-                    height: 200,
+                    height: _showList,
                     child: SingleChildScrollView(
                       child: Column(
                         children:
@@ -251,6 +255,11 @@ class _AddressPageState extends State<AddressPage> {
 
                               // Set the _addressController with the selected location name
                               _addressController.text = selectedLocationName;
+
+                              // Update the state to hide the list
+                              setState(() {
+                                _showList = 0;
+                              });
                             },
                           );
                         }).toList(),
@@ -316,7 +325,7 @@ class _AddressPageState extends State<AddressPage> {
           ),
         ),
         title: Text(
-          'Tambah Alamat',
+          'Edit Alamat',
           style: boldTextStyle,
         ),
       ),
@@ -346,22 +355,22 @@ class _AddressPageState extends State<AddressPage> {
                         Provider.of<AddressProvider>(context, listen: false);
 
                     try {
-                      await locProvider.createAddress(
-                        _nameController.text,
-                        _numberController.text,
-                        _fullAddressController.text,
-                        selectedAreaId,
-                        selectedProvince,
-                        selectedCity,
-                        selectedDistrict,
-                        selectedPostalCode,
-                        _noteController.text,
-                        _isPrimary,
-                        context
-                      );
+                      await locProvider.updateAddress(
+                          _nameController.text,
+                          _numberController.text,
+                          _fullAddressController.text,
+                          selectedAreaId,
+                          selectedProvince,
+                          selectedCity,
+                          selectedDistrict,
+                          selectedPostalCode,
+                          _noteController.text,
+                          _isPrimary,
+                          widget.addressId,
+                          context);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('sukses membuat alamat Sukses'),
+                          content: Text('Sukses memperbaharui alamat'),
                           backgroundColor: primaryColor,
                         ),
                       );
@@ -380,7 +389,7 @@ class _AddressPageState extends State<AddressPage> {
                     fixedSize: const Size(340, 50),
                   ),
                   child: Text(
-                    'Daftar',
+                    'Simpan',
                     style: boldTextStyle.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,

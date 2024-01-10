@@ -19,7 +19,7 @@ class _ListAddressPageState extends State<ListAddressPage> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<AddressProvider>(context, listen: false).fetchAddresses());
+        Provider.of<AddressProvider>(context, listen: false).fetchAddresses(context));
   }
 
   @override
@@ -69,7 +69,7 @@ class _ListAddressPageState extends State<ListAddressPage> {
                   return AddressCard(
                       address: data.addresses[index],
                       onDelete: () {
-                        data.deleteAddressItem(data.addresses[index].id);
+                        data.deleteAddressItem(data.addresses[index].id, context);
                       });
                 },
               );

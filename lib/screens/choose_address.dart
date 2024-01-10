@@ -21,7 +21,7 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<AddressProvider>(context, listen: false).fetchAddresses());
+        Provider.of<AddressProvider>(context, listen: false).fetchAddresses(context));
   }
 
   @override
