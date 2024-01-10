@@ -55,6 +55,16 @@ class AddressProvider with ChangeNotifier {
           _addresses =
               responseData.map((item) => AddressModel.fromJson(item)).toList();
 
+          _addresses.sort((a, b) {
+            if (a.isPrimary && !b.isPrimary) {
+              return -1;
+            } else if (!a.isPrimary && b.isPrimary) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+
           _addressStatus = AddressStatus.success;
           notifyListeners();
           return _addresses;
@@ -153,6 +163,33 @@ class AddressProvider with ChangeNotifier {
       debugPrint('error: $error');
       notifyListeners();
       throw Exception('Failed to fetch address data');
+    }
+  }
+
+  Future<void> setPrimaryAddress(int addressId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('access_token');
+
+    final url = Uri.parse('$baseUrl/users/addresses/$addressId/primary');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('Address set as primary successfully');
+      } else {
+        print('Failed to set address as primary: ${response.body}');
+        throw Exception('Failed to set address as primary');
+      }
+    } catch (error) {
+      print('Error: $error');
+      throw Exception('Failed to set address as primary');
     }
   }
 
@@ -270,7 +307,8 @@ class AddressProvider with ChangeNotifier {
       _error = '';
 
       final response = await http.patch(
-        Uri.parse('$baseUrl/users/addresses/$addressId'), // Adjust the API endpoint
+        Uri.parse(
+            '$baseUrl/users/addresses/$addressId'), // Adjust the API endpoint
         headers: {
           'Content-Type': 'application/json',
           HttpHeaders.authorizationHeader: 'Bearer $token',
@@ -285,8 +323,7 @@ class AddressProvider with ChangeNotifier {
             'city': city,
             'district': district,
             'postal_code': postalCode,
-            'note': note,
-            'is_primary': isPrimary,
+            'note': note
           },
         ),
       );

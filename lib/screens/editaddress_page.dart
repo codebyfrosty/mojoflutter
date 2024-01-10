@@ -174,33 +174,6 @@ class _EditAddressPageState extends State<EditAddressPage> {
       );
     }
 
-    Widget jadikanAlamatUtama() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Jadikan Alamat Utama',
-            style: boldTextStyle,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Switch.adaptive(
-            activeColor: primaryColor,
-            value: _isPrimary,
-            onChanged: (newValue) {
-              setState(() {
-                _isPrimary = newValue;
-              });
-            },
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-        ],
-      );
-    }
-
     Widget kecamatanInput() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -343,7 +316,6 @@ class _EditAddressPageState extends State<EditAddressPage> {
               noHp(),
               fullAddress(),
               kecamatanInput(),
-              jadikanAlamatUtama(),
               noTe(),
               const SizedBox(
                 height: 20,
