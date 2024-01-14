@@ -255,7 +255,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 40,
                 ),
                 Text(
-                  'Selamat datang kembali\ndi Mojopahit Furniture',
+                  'Selamat datang \ndi Mojopahit Furniture',
                   style: boldTextStyle.copyWith(fontSize: 24),
                   textAlign: TextAlign.center,
                 ),
@@ -279,11 +279,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       if (_formKey.currentState!.validate()) {
                         try {
                           await authProvider.register(
-                            name: 'reza rahardian',
-                            email: 'reza@gmail.com',
-                            password: '123456',
-                            phone: '081299878879',
-                            confirm_password: '123456',
+                            name: _nameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            phone: _numberController.text,
+                            confirm_password: _confirmController.text,
                           );
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

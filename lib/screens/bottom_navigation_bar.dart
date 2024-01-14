@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ar/provider/auth_provider.dart';
 import 'package:flutter_ar/screens/cart_page.dart';
 import 'package:flutter_ar/screens/favorite_page.dart';
+import 'package:flutter_ar/screens/login_page.dart';
 import 'package:flutter_ar/screens/notlogin_page.dart';
 import 'package:flutter_ar/screens/profile_page.dart';
 import 'package:flutter_ar/shared/theme.dart';
@@ -14,7 +15,6 @@ import 'home_page.dart';
 class BottomNavigationBarWidget extends StatefulWidget {
   const BottomNavigationBarWidget({Key? key}) : super(key: key);
 
-  
   @override
   State<BottomNavigationBarWidget> createState() =>
       _BottomNavigationBarWidgetState();
@@ -94,8 +94,8 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
           title: "Home",
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(Icons.person),
-          title: "Profile",
+          icon: const Icon(Icons.login),
+          title: "Login",
           activeColorPrimary: primaryColor,
           inactiveColorPrimary: Colors.grey,
         )

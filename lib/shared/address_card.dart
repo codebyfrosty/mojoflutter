@@ -20,7 +20,8 @@ class AddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color checkIconColor = address.isPrimary ? Colors.green : Colors.grey;
+    Color checkIconColor = address.isPrimary ? primaryColor : Colors.grey;
+    String checktext = address.isPrimary ? 'Alamat Utama' : "Jadikan Utama";
     AddressProvider addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
 
@@ -33,19 +34,19 @@ class AddressCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (address.isPrimary)
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              margin: EdgeInsets.only(bottom: 10),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 116, 116, 116),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Text(
-                'Utama',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+          // if (address.isPrimary)
+          //   Container(
+          //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          //     margin: EdgeInsets.only(bottom: 10),
+          //     decoration: BoxDecoration(
+          //       color: const Color.fromARGB(255, 116, 116, 116),
+          //       borderRadius: BorderRadius.circular(5),
+          //     ),
+          //     child: Text(
+          //       'Utama',
+          //       style: TextStyle(color: Colors.white),
+          //     ),
+          //   ),
           Text(
             '${address.contactName} - ${address.contactPhone}',
             style: boldTextStyle,
@@ -78,42 +79,57 @@ class AddressCard extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      'Rumah',
-                      style: boldTextStyle.copyWith(color: primaryColor),
-                    ),
+                    // Text(
+                    //   'Rumah',
+                    //   style: boldTextStyle.copyWith(color: primaryColor),
+                    // ),
                   ],
                 ),
               ),
-              IconButton(
-                onPressed: () async {
-                  try {
-                    final currentContext = context;
-                    await addressProvider.setPrimaryAddress(address.id);
-                    ScaffoldMessenger.of(currentContext).showSnackBar(
-                      const SnackBar(
-                        content: Text('Alamat telah dijadikan alamat utama'),
-                      ),
-                    );
-                    // Redirect ke halaman yang sama
-                    Navigator.pushReplacement(
-                      currentContext,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => ListAddressPage(),
-                      ),
-                    );
-                  } catch (error) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Text('Gagal menjadikan alamat utama'),
-                          backgroundColor: Colors.red),
-                    );
-                    print('Error: $error');
-                  }
-                },
-                icon: Icon(Icons.check_circle),
-                color: checkIconColor,
-                iconSize: 30,
+              Column(
+                children: [
+                  TextButton(
+                    onPressed: () async {
+                      try {
+                        final currentContext = context;
+                        await addressProvider.setPrimaryAddress(address.id);
+                        ScaffoldMessenger.of(currentContext).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: primaryColor,
+                            content:
+                                Text('Alamat telah dijadikan alamat utama'),
+                          ),
+                        );
+                        // Redirect ke halaman yang sama
+                        Navigator.pushReplacement(
+                          currentContext,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                ListAddressPage(),
+                          ),
+                        );
+                      } catch (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Gagal menjadikan alamat utama'),
+                              backgroundColor: Colors.red),
+                        );
+                        print('Error: $error');
+                      }
+                    },
+                    style: TextButton.styleFrom(
+                        padding: EdgeInsets.all(10),
+                        backgroundColor: checkIconColor),
+                    child: Text(checktext,
+                        style: TextStyle(
+                          color: Colors.white,
+                        )),
+                    // icon: Icon(Icons.check_circle),
+                    // color: checkIconColor,
+                    // iconSize: 30,
+                  ),
+                  // Text("Jadikan Utama"),
+                ],
               ),
             ],
           ),

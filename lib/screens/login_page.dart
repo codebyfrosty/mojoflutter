@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
             decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(20),
                 labelStyle: regularTextStyle,
-                hintText: 'Masukkan kata sandi lama',
+                hintText: 'Masukkan kata sandi',
                 hintStyle: regularTextStyle,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -129,8 +129,8 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () {
                           pushNewScreen(context, screen: const RegisterPage());
                         },
-                        child:
-                            Text('Belum punya akun?', style: regularTextStyle)),
+                        child: Text('Belum punya akun? Buat akun baru disini',
+                            style: regularTextStyle)),
                   ],
                 ),
                 const SizedBox(
@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
-                                'Login gagal, pastikan email dan password benar'),
+                                'Login gagal, periksa koneksi internet anda'),
                             backgroundColor: Colors.red,
                           ),
                         );

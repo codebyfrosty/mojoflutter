@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                 } else if (data.status == Status.error) {
                   return Center(
                     child: Text(
-                      'Error: ${data.error}',
+                      'Gagal mengambil data produk unggulan, periksa koneksi internet anda',
                       style: TextStyle(color: Colors.red),
                     ),
                   );
@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
             } else if (data.status == Status.error) {
               return Center(
                 child: Text(
-                  'Error: ${data.error}',
+                  'Gagal mengambil data produk, periksa koneksi internet anda',
                   style: TextStyle(color: Colors.red),
                 ),
               );
@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
             } else if (data.status == Status.error) {
               return Center(
                 child: Text(
-                  'Error: ${data.error}',
+                  'Gagal mengambil data kursi, periksa koneksi internet anda',
                   style: TextStyle(color: Colors.red),
                 ),
               );
@@ -242,7 +242,7 @@ class _HomePageState extends State<HomePage> {
             } else if (data.status == Status.error) {
               return Center(
                 child: Text(
-                  'Error: ${data.error}',
+                  'Gagal mengambil data sofa, periksa koneksi internet anda',
                   style: TextStyle(color: Colors.red),
                 ),
               );
@@ -288,7 +288,7 @@ class _HomePageState extends State<HomePage> {
             } else if (data.status == Status.error) {
               return Center(
                 child: Text(
-                  'Error: ${data.error}',
+                  'Gagal mengambil data meja, periksa koneksi internet anda',
                   style: TextStyle(color: Colors.red),
                 ),
               );
@@ -334,7 +334,7 @@ class _HomePageState extends State<HomePage> {
             } else if (data.status == Status.error) {
               return Center(
                 child: Text(
-                  'Error: ${data.error}',
+                  'Gagal mengambil data lemari, periksa koneksi internet anda',
                   style: TextStyle(color: Colors.red),
                 ),
               );

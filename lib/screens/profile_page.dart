@@ -85,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Account',
+              'Akun',
               style: boldTextStyle.copyWith(color: Colors.grey),
             ),
             const SizedBox(
@@ -137,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             SettingsCard(
                 imagePath: 'assets/images/editalamat.png',
-                text: 'Edit Alamat',
+                text: 'Alamat Saya',
                 onPressed: () {
                   pushNewScreen(context,
                       screen: const ListAddressPage(), withNavBar: false);

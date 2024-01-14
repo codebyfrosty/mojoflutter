@@ -30,6 +30,20 @@ class ChooseAddressCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (address.isPrimary)
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      margin: EdgeInsets.only(bottom: 10),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 116, 116, 116),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        'Utama',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   Text(
                     '${address.contactName} - ${address.contactPhone}',
                     style: boldTextStyle,
@@ -58,10 +72,10 @@ class ChooseAddressCard extends StatelessWidget {
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    'Rumah',
-                    style: boldTextStyle.copyWith(color: primaryColor),
-                  ),
+                  // Text(
+                  //   'Rumah',
+                  //   style: boldTextStyle.copyWith(color: primaryColor),
+                  // ),
                 ],
               ),
             ),
