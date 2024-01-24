@@ -6,7 +6,7 @@ import 'package:flutter_ar/shared/theme.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_ar/provider/payment_provider.dart';
-import 'package:flutter_ar/model/payment_model.dart';
+// import 'package:flutter_ar/model/payment_model.dart';
 
 class PendingPaymentScreen extends StatefulWidget {
   const PendingPaymentScreen({Key? key}) : super(key: key);
@@ -206,7 +206,7 @@ class _PendingPaymentScreenState extends State<PendingPaymentScreen> {
                       ),
                       const SizedBox(height: 10.0),
                       Text(
-                        'Payment Due: ${DateFormat('dd-MM-yyyy HH:mm:ss').format(payment.expiryTime)}',
+                        'Payment Due: ${DateTime.parse(payment.expiryTime.toString()).toLocal()}',
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Color.fromARGB(255, 164, 33, 33),

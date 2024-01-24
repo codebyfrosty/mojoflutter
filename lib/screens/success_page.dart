@@ -45,23 +45,23 @@ class SuccessPage extends StatelessWidget {
                   const SizedBox(
                     height: 15,
                   ),
-                  FilledButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/main');
-                    },
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      side: const BorderSide(color: primaryColor),
-                      fixedSize: const Size(340, 50),
-                    ),
-                    child: Text(
-                      'Batal',
-                      style: boldTextStyle.copyWith(
-                          color: primaryColor,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20),
-                    ),
-                  ),
+                  // FilledButton(
+                  //   onPressed: () {
+                  //     Navigator.pushNamed(context, '/main');
+                  //   },
+                  //   style: FilledButton.styleFrom(
+                  //     backgroundColor: Colors.white,
+                  //     side: const BorderSide(color: primaryColor),
+                  //     fixedSize: const Size(340, 50),
+                  //   ),
+                  //   child: Text(
+                  //     'Batal',
+                  //     style: boldTextStyle.copyWith(
+                  //         color: primaryColor,
+                  //         fontWeight: FontWeight.w700,
+                  //         fontSize: 20),
+                  //   ),
+                  // ),
                 ],
               ),
             )

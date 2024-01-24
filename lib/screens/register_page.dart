@@ -293,7 +293,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            '/main',
+                            '/login',
                             (route) => false,
                           );
                         } catch (error) {

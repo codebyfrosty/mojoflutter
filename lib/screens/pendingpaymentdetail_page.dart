@@ -35,8 +35,9 @@ class _DetailPembayaranPageState extends State<DetailPembayaranPage> {
 
   void _startCountdown() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      // final expiryTime = widget.paymentDetail.expiryTime;
       final expiryTime = widget.paymentDetail.expiryTime;
-      final now = DateTime.now();
+      final now = DateTime.now().toLocal();
       final parsedExpiryTime = DateTime.parse(expiryTime);
       final duration = parsedExpiryTime.difference(now);
 
@@ -46,7 +47,7 @@ class _DetailPembayaranPageState extends State<DetailPembayaranPage> {
         });
         _timer.cancel();
       } else {
-        final hours = duration.inHours;
+        final hours = duration.inHours - 9;
         final minutes = duration.inMinutes.remainder(60);
         final seconds = duration.inSeconds.remainder(60);
 

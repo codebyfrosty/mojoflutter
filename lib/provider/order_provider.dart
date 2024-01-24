@@ -149,4 +149,33 @@ class OrderProvider with ChangeNotifier {
       throw Exception('Error cancel payment: $e');
     }
   }
+
+  Future<void> check({required String paymentId}) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('access_token');
+    final url = Uri.parse('$baseUrl/payments/$paymentId/cancel');
+
+    final requestData = {
+      "payment_id": paymentId,
+    };
+
+    try {
+      final response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json',
+            HttpHeaders.authorizationHeader: 'Bearer $token',
+          },
+          body: json.encode(requestData));
+
+      if (response.statusCode == 200) {
+        debugPrint('response: ${response.body}');
+      } else {
+        debugPrint('error: ${response.body}');
+        throw Exception('Failed to cancel payment');
+      }
+    } catch (e) {
+      debugPrint('error: $e');
+      throw Exception('Error cancel payment: $e');
+    }
+  }
 }

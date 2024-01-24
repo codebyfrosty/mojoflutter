@@ -32,7 +32,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
 
     if (createdOrderData != null) {
       final rawExpiryTime = createdOrderData['expiry_time'];
-      final expiryTime = DateTime.parse(rawExpiryTime).toLocal();
+      final expiryTime = DateTime.parse(rawExpiryTime);
       final currentTime = DateTime.now();
       _countdownDuration = expiryTime.difference(currentTime);
 
@@ -42,7 +42,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
   }
 
   void _formatCountdownDuration() {
-    final hours = _countdownDuration.inHours;
+    final hours = _countdownDuration.inHours - 9;
     final minutes = _countdownDuration.inMinutes.remainder(60);
     final seconds = _countdownDuration.inSeconds.remainder(60);
 
@@ -209,7 +209,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
                                     .cancelPayment(
                                         paymentId: createdOrderData['id'])
                                     .then((value) => pushNewScreen(context,
-                                        screen: const CancelPage(),
+                                        screen: const SuccessPage(),
                                         withNavBar: true));
                               },
                               style: ElevatedButton.styleFrom(

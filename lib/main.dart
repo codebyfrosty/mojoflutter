@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/introduction': (context) => const IntroductionPage(),
           '/main': (context) => BottomNavigationBarWidget(),
+          '/login': (context) => LoginPage(),
         },
         title: 'Flutter AR',
         theme: ThemeData(
