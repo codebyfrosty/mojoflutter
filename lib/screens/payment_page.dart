@@ -209,7 +209,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
                                     .cancelPayment(
                                         paymentId: createdOrderData['id'])
                                     .then((value) => pushNewScreen(context,
-                                        screen: const SuccessPage(),
+                                        screen: const CancelPage(),
                                         withNavBar: true));
                               },
                               style: ElevatedButton.styleFrom(
