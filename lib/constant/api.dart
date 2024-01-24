@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
-const baseUrl = 'https://toko-mojopahit-production.up.railway.app/v1';
+// const baseUrl = 'https://toko-mojopahit-production.up.railway.app/v1';
+const baseUrl = 'https://toko-mojopahit-production-8a47.up.railway.app/v1';
 
 enum Status {
   loading,
