@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_ar/provider/order_provider.dart';
+import 'package:flutter_ar/provider/payment_provider.dart';
 import 'package:flutter_ar/screens/cancel_page.dart';
+import 'package:flutter_ar/screens/pendingpaymentdetail_page.dart';
 import 'package:flutter_ar/screens/success_page.dart';
 import 'package:flutter_ar/shared/theme.dart';
 import 'package:intl/intl.dart';
@@ -72,6 +74,18 @@ class _PembayaranPageState extends State<PembayaranPage> {
 
   @override
   Widget build(BuildContext context) {
+    Future<dynamic> _fetchPaymentDetail(
+        String paymentId, BuildContext context) async {
+      try {
+        final orderProvider =
+            Provider.of<PaymentProvider>(context, listen: false);
+        final paymentDetail = await orderProvider.fetchPaymentDetail(paymentId);
+        return paymentDetail;
+      } catch (error) {
+        throw Exception('Error fetching payment detail: $error');
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -227,27 +241,56 @@ class _PembayaranPageState extends State<PembayaranPage> {
                           ),
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () {
-                                if (createdOrderData['status'] == 'pending') {
-                                  // show snackbar
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                          'Silakan selesaikan pembayaran anda'),
-                                      backgroundColor: primaryColor,
-                                    ),
-                                  );
-                                } else if (createdOrderData['status'] ==
-                                    'success') {
-                                  pushNewScreen(context,
-                                      screen: const SuccessPage());
-                                } else {
-                                  // show snackbar
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Pembayaran gagal'),
-                                      backgroundColor: primaryColor,
-                                    ),
+                              onPressed: () async {
+                                try {
+                                  final paymentDetail =
+                                      await _fetchPaymentDetail(
+                                          createdOrderData['id'], context);
+
+                                  if (paymentDetail.status == 'pending') {
+                                    // show snackbar
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                            'Silakan selesaikan pembayaran anda'),
+                                        backgroundColor: primaryColor,
+                                      ),
+                                    );
+                                  } else if (paymentDetail.status ==
+                                      'success') {
+                                    pushNewScreen(context,
+                                        screen: const SuccessPage());
+                                  } else {
+                                    // show snackbar
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Pembayaran gagal'),
+                                        backgroundColor: primaryColor,
+                                      ),
+                                    );
+                                  }
+                                } catch (error) {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
+                                  print(
+                                      'Error fetching payment detail: $error');
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('Error'),
+                                        content: Text(
+                                            'Error fetching payment detail'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      );
+                                    },
                                   );
                                 }
                               },

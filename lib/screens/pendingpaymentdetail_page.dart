@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_ar/provider/order_provider.dart';
+import 'package:flutter_ar/provider/payment_provider.dart';
 import 'package:flutter_ar/screens/cancel_page.dart';
 import 'package:flutter_ar/screens/success_page.dart';
 import 'package:intl/intl.dart';
@@ -60,6 +61,18 @@ class _DetailPembayaranPageState extends State<DetailPembayaranPage> {
 
   @override
   Widget build(BuildContext context) {
+    Future<dynamic> _fetchPaymentDetail(
+        String paymentId, BuildContext context) async {
+      try {
+        final orderProvider =
+            Provider.of<PaymentProvider>(context, listen: false);
+        final paymentDetail = await orderProvider.fetchPaymentDetail(paymentId);
+        return paymentDetail;
+      } catch (error) {
+        throw Exception('Error fetching payment detail: $error');
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pembayaran'),
@@ -153,27 +166,55 @@ class _DetailPembayaranPageState extends State<DetailPembayaranPage> {
                 SizedBox(
                   width: 160,
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (widget.paymentDetail.status == 'pending') {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Silakan selesaikan pembayaran anda'),
-                            backgroundColor: Theme.of(context).primaryColor,
-                          ),
-                        );
-                      } else if (widget.paymentDetail.status == 'success') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SuccessPage(),
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Pembayaran gagal'),
-                            backgroundColor: Theme.of(context).primaryColor,
-                          ),
+                    onPressed: () async {
+                      try {
+                        final paymentDetail = await _fetchPaymentDetail(
+                            widget.paymentDetail.id, context);
+
+                        if (paymentDetail.status == 'pending') {
+                          // show snackbar
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('Silakan selesaikan pembayaran anda'),
+                              backgroundColor: primaryColor,
+                            ),
+                          );
+                        } else if (paymentDetail.status == 'success') {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SuccessPage(),
+                            ),
+                          );
+                        } else {
+                          // show snackbar
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Pembayaran gagal'),
+                              backgroundColor: primaryColor,
+                            ),
+                          );
+                        }
+                      } catch (error) {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        print('Error fetching payment detail: $error');
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Error'),
+                              content: Text('Error fetching payment detail'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
                         );
                       }
                     },
